@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { HomePage } from './components/HomePage';
-import { ConfigurationsPage } from './components/ConfigurationsPage';
-import { Navigation } from './components/Navigation';
+import { HomePage } from './components/pages/HomePage';
+import { ConfigurationsPage } from './components/pages/ConfigurationsPage';
+import { Navigation } from './components/pages/Navigation';
 import { Toaster } from './components/ui/sonner';
 import Header from './components/ui/Header';
 import Footer from './components/ui/Footer';
