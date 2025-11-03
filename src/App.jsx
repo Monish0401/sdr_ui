@@ -4,6 +4,8 @@ import { HomePage } from './components/HomePage';
 import { ConfigurationsPage } from './components/ConfigurationsPage';
 import { Navigation } from './components/Navigation';
 import { Toaster } from './components/ui/sonner';
+import Header from './components/ui/Header';
+import Footer from './components/ui/Footer';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
@@ -53,6 +55,7 @@ function App() {
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-950' : 'bg-gray-100'}`}>
+      <Header />
       <Navigation 
         currentPage={currentPage} 
         setCurrentPage={setCurrentPage}
@@ -73,6 +76,7 @@ function App() {
         </AnimatePresence>
       </main>
       <Toaster theme={theme} />
+      <Footer />
     </div>
   );
 }
