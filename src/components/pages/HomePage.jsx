@@ -6,8 +6,8 @@ import {
   Clock,
 } from "lucide-react";
 import { motion } from "motion/react";
-import { Card } from "./ui/card";
-import { Badge } from "./ui/badge";
+import { Card } from "../ui/card";
+import { Badge } from "../ui/badge";
 
 // Removed TypeScript type imports
 

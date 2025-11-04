@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './ui/tabs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { TextConfigPage } from './TextConfigPage';
 import { DataConfigPage } from './DataConfigPage';
 
