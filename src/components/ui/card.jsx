@@ -37,7 +37,7 @@ function CardTitle({ className, ...props }) {
       data-slot="card-title"
       className={cn("leading-none", className)}
       {...props}
-    />
+    ></h4>
   );
 }
 
