@@ -32,6 +32,9 @@ jobs:
       - name: Install React Router
         run: npm install react-router-dom
 
+      - name: Install sonner
+        run: npm install sonner@2.0.3
+
       - name: Install React Icons
         run: npm install react-icons
 
