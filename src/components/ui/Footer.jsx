@@ -5,8 +5,8 @@ const Footer = () => {
     <footer style={{
       textAlign: "center",
       padding: "20px",
-      backgroundColor: "#f5f5f5",
-      position: "fixed",
+      // backgroundColor: "#f5f5f5",
+      position: "sticky",
       left: 0,
       bottom: 0,
       width: "100%",
