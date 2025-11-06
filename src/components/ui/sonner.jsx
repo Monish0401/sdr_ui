@@ -1,7 +1,7 @@
 "use client";
 
 // Removed type import: ToasterProps
-import { Toaster as Sonner } from "sonner@2.0.3";
+import { Toaster as Sonner } from "sonner";
 
 // Removed interface declaration:
 // interface CustomToasterProps extends Omit<ToasterProps, 'theme'> {
