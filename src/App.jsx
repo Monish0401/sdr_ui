@@ -55,7 +55,7 @@ function App() {
 
   return (
     <div className={`min-h-screen ${theme === 'dark' ? 'bg-slate-950' : 'bg-gray-100'}`}>
-      <Header />
+      <Header theme={theme} />
       <Navigation 
         currentPage={currentPage} 
         setCurrentPage={setCurrentPage}
@@ -76,7 +76,7 @@ function App() {
         </AnimatePresence>
       </main>
       <Toaster theme={theme} />
-      <Footer />
+      <Footer theme={theme} />
     </div>
   );
 }
