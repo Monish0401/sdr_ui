@@ -3,7 +3,7 @@
 import * as React from "react";
 // Removed type import: OTPInputContext
 import { OTPInput } from "input-otp@1.4.2";
-import { MinusIcon } from "lucide-react@0.487.0";
+import { MinusIcon } from "lucide-react";
 
 import { cn } from "./utils";
 

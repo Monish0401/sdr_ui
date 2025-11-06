@@ -35,6 +35,9 @@ jobs:
       - name: Install sonner
         run: npm install sonner@2.0.3
 
+      - name : Install class-variance-authority
+        run: npm install class-variance-authority@0.7.1
+
       - name: Install React Icons
         run: npm install react-icons
 
