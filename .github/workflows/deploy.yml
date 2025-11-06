@@ -36,8 +36,8 @@ jobs:
         run: npm install sonner@2.0.3
         
       - name: Install radix-ui dependencies
-        run: npm install @radix-ui
-        # run: npm install @radix-ui/react-tabs
+        # run: npm install @radix-ui
+        run: npm install @radix-ui/react-tabs
         # run: npm install @radix-ui/react-accordion@1.2.3
         # run: npm install @radix-ui/react-alert-dialog@1.1.6
         # run: npm install @radix-ui/react-aspect-ratio@1.1.2
