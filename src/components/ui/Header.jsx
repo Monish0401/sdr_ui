@@ -3,7 +3,7 @@
 import React from "react";
 // import "../../App.css";
 
-const Header = ({ payloadData, theme }) => {
+const Header = ({ theme }) => {
   return (
     <div
       style={{

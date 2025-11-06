@@ -1,6 +1,6 @@
 import React from "react";
 
-const Footer = () => {
+const Footer = ({ theme }) => {
   return (
     <footer style={{
       textAlign: "center",
@@ -12,13 +12,13 @@ const Footer = () => {
       width: "100%",
       boxShadow: "0 -2px 5px rgba(0,0,0,0.1)"
     }}>
-      <h4>Note: This is not an Official Application. It's still in development....</h4>
+      <h4 className={`mb-2 ${theme === "dark" ? "text-white" : "text-gray-900"}`}>Note: This is not an Official Application. It's still in development....</h4>
       <code>
-        <b style={{ color: "#000011", padding: "0 10px" }}>
+        <b className={`mb-2 ${theme === "dark" ? "text-white" : "text-gray-900"}`} style={{ color: "#000011", padding: "0 10px" }}>
           © Copyright {new Date().getFullYear()} | Designed & Developed by SAC-ISRO.
         </b>
         <br />
-        <b style={{ color: "#000011", padding: "0 10px" }}>
+        <b className={`mb-2 ${theme === "dark" ? "text-white" : "text-gray-900"}`} style={{ color: "#000011", padding: "0 10px" }}>
           Space Application Center(Indian Space Research Organisation). All rights reserved.
         </b>
       </code>
