@@ -2,7 +2,7 @@
 
 import * as React from "react";
 // Removed type import: OTPInputContext
-import { OTPInput } from "input-otp@1.4.2";
+import { OTPInput } from "input-otp";
 import { MinusIcon } from "lucide-react";
 
 import { cn } from "./utils";
