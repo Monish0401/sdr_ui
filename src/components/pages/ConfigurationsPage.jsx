@@ -22,18 +22,32 @@ export function ConfigurationsPage({ payloadData, setPayloadData, theme }) {
       >
         <Tabs defaultValue="text" className="w-full">
           <TabsList className={theme === 'dark' ? 'bg-slate-900 border border-slate-800' : 'bg-gray-100 border border-gray-200'}>
-            <TabsTrigger value="text" className={theme === 'dark' ? 'data-[state=active]:bg-slate-800' : 'data-[state=active]:bg-white'}>
+
+            <TabsTrigger
+              value="text"
+              // TEXT COLOR FIX: Add 'text-...' for inactive state, and 'data-[state=active]:text-...' for active state.
+              className={theme === 'dark'
+                ? 'text-slate-300 data-[state=active]:bg-slate-800 data-[state=active]:text-white'
+                : 'text-gray-700 data-[state=active]:bg-white data-[state=active]:text-gray-900'}
+            >
               Text Config
             </TabsTrigger>
-            <TabsTrigger value="data" className={theme === 'dark' ? 'data-[state=active]:bg-slate-800' : 'data-[state=active]:bg-white'}>
+
+            <TabsTrigger
+              value="data"
+              className={theme === 'dark'
+                ? 'text-slate-300 data-[state=active]:bg-slate-800 data-[state=active]:text-white'
+                : 'text-gray-700 data-[state=active]:bg-white data-[state=active]:text-gray-900'}
+            >
               Data Config
             </TabsTrigger>
+
           </TabsList>
-          
+
           <TabsContent value="text" className="mt-6">
             <TextConfigPage payloadData={payloadData} setPayloadData={setPayloadData} theme={theme} />
           </TabsContent>
-          
+
           <TabsContent value="data" className="mt-6">
             <DataConfigPage payloadData={payloadData} setPayloadData={setPayloadData} theme={theme} />
           </TabsContent>
