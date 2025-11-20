@@ -165,7 +165,7 @@ export function TextConfigPage({ payloadData, setPayloadData, theme }) {
                     </>
                   )}
                 </Button>
-                <Button variant="outline" onClick={() => setCommand('')} className={theme === 'dark' ? 'border-slate-700 text-slate-300' : 'border-gray-300 text-gray-700'}>
+                <Button variant="outline" onClick={() => setCommand('')} className={theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}>
                   Clear
                 </Button>
               </div>
@@ -178,7 +178,7 @@ export function TextConfigPage({ payloadData, setPayloadData, theme }) {
                 <History className="w-5 h-5 text-blue-400" />
                 <h2 className={theme === 'dark' ? 'text-white' : 'text-gray-900'}>Command History</h2>
               </div>
-              <Button variant="outline" size="sm" onClick={clearHistory} className={theme === 'dark' ? 'border-slate-700 text-slate-300' : 'border-gray-300 text-gray-700'}>
+              <Button variant="outline" size="sm" onClick={clearHistory} className={theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}>
                 <Trash2 className="w-4 h-4 mr-2" />
                 Clear
               </Button>
@@ -260,7 +260,7 @@ export function TextConfigPage({ payloadData, setPayloadData, theme }) {
               <Button
                 onClick={() => setCommand('GET_STATUS')}
                 variant="outline"
-                className={`w-full ${theme === 'dark' ? 'border-slate-700 text-slate-300' : 'border-gray-300 text-gray-700'}`}
+                className={`w-full ${theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}`}
               >
                 Get Status
               </Button>

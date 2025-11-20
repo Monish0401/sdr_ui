@@ -222,11 +222,11 @@ export function DataConfigPage({ payloadData, setPayloadData, theme }) {
                 </div>
               </DialogContent>
             </Dialog>
-            <Button variant="outline" onClick={handleExportData} className={theme === 'dark' ? 'border-slate-700 text-slate-300' : 'border-gray-300 text-gray-700'}>
+            <Button variant="outline" onClick={handleExportData} className={theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}>
               <Download className="w-4 h-4 mr-2" />
               Export
             </Button>
-            <Button variant="outline" className={`relative ${theme === 'dark' ? 'border-slate-700 text-slate-300' : 'border-gray-300 text-gray-700'}`}>
+            <Button variant="outline" className={`relative ${theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}`}>
               <Upload className="w-4 h-4 mr-2" />
               Import
               <input
@@ -285,7 +285,7 @@ export function DataConfigPage({ payloadData, setPayloadData, theme }) {
                           <Button
                             variant="outline"
                             size="sm"
-                            className={theme === 'dark' ? 'border-slate-700 text-slate-300 hover:bg-slate-700' : 'border-gray-300 text-gray-700 hover:bg-gray-100'}
+                            className={theme === 'dark' ? 'border-gray-300 text-gray-700 hover:bg-gray-100' : 'border-gray-300 text-gray-700 hover:bg-gray-100'}
                           >
                             <Edit className="w-4 h-4" />
                           </Button>
