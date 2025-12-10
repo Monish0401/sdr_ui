@@ -40,8 +40,11 @@ const itemVariants = {
 
 export function TestPage({ payloadData, setPayloadData, theme }) {
   const [command, setCommand] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const sendCommandButtonRef = useRef(null);
+  const [isLoading, setIsLoading] = useState({
+    Start: false,
+    Stop: false,
+    Status: false
+  });
   // Type annotation for useState removed: <Array<{ cmd: string; timestamp: string; status: 'success' | 'error' }>>
   const [commandHistory, setCommandHistory] = useState([
     { cmd: 'SET_FREQ 915.0', timestamp: new Date(Date.now() - 300000).toISOString(), status: 'success' },
@@ -49,24 +52,38 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
     { cmd: 'SET_GAIN 20', timestamp: new Date(Date.now() - 180000).toISOString(), status: 'success' },
   ]);
 
-  
+
 
   const handleQuickActions = async (buttonType) => {
-    
-    setIsLoading(true);
+
+    // setIsLoading(true);
 
     // Simulate network delay
     await new Promise(resolve => setTimeout(resolve, 800));
 
-    
+
 
     let newPayloadData = { ...payloadData };
     let success = true;
 
+
+
+
     try {
       switch (buttonType) {
         case 'Start':
-          newPayloadData.status = 'active';
+          setIsLoading((prevState) => ({
+            ...prevState,
+            [buttonType]: true,
+          }));
+          
+          setTimeout(() => {
+            setIsLoading((prevState) => ({
+              ...prevState,
+              [buttonType]: false,
+            }));
+            newPayloadData.status = 'active';
+          }, 2000);
           break;
         case 'Stop':
           newPayloadData.status = 'idle';
@@ -84,7 +101,7 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
         newPayloadData.lastUpdate = new Date().toISOString();
         newPayloadData.textCommands = [...payloadData.textCommands, command.trim()];
         setPayloadData(newPayloadData);
-        setCommandHistory([...commandHistory, { cmd: command.trim(), timestamp: new Date().toISOString(), status: 'success' }]);
+        setCommandHistory([...commandHistory, { cmd: buttonType, timestamp: new Date().toISOString(), status: 'success' }]);
         toast.success('Command executed successfully', {
           description: `${buttonType} completed`,
         });
@@ -242,7 +259,7 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
           </Card>
 
 
-          
+
         </div>
 
         <div className="space-y-6">
@@ -275,19 +292,19 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
               <Button
                 onClick={() => handleQuickActions('Start')}
                 className="w-full bg-green-600 hover:bg-green-700"
-                disabled={isLoading}
+                disabled={isLoading.Start}
               >
-                {isLoading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Executing...
-                    </>
-                  ) : (
-                    <>
-                      Start Transmission
-                    </>
-                  )}
-                
+                {isLoading.Start ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Executing...
+                  </>
+                ) : (
+                  <>
+                    Start Transmission
+                  </>
+                )}
+
               </Button>
               <Button
                 onClick={() => handleQuickActions('Stop')}
@@ -295,16 +312,16 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
                 disabled={isLoading}
               >
                 {isLoading ? (
-                    <>
-                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                      Executing...
-                    </>
-                  ) : (
-                    <>
-                      Stop Transmission
-                    </>
-                  )}
-                
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Executing...
+                  </>
+                ) : (
+                  <>
+                    Stop Transmission
+                  </>
+                )}
+
               </Button>
               <Button
                 onClick={() => handleQuickActions('Status')}
@@ -318,49 +335,49 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
         </div>
       </div>
       <Card className={`p-6 ${theme === 'dark' ? 'bg-slate-900 border-slate-800' : 'bg-white border-gray-200'}`}>
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-2">
-                <History className="w-5 h-5 text-blue-400" />
-                <h2 className={theme === 'dark' ? 'text-white' : 'text-gray-900'}>Data History</h2>
-              </div>
-              <Button variant="outline" size="sm" onClick={clearHistory} className={theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}>
-                <Trash2 className="w-4 h-4 mr-2" />
-                Clear
-              </Button>
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-2">
+            <History className="w-5 h-5 text-blue-400" />
+            <h2 className={theme === 'dark' ? 'text-white' : 'text-gray-900'}>Data History</h2>
+          </div>
+          <Button variant="outline" size="sm" onClick={clearHistory} className={theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}>
+            <Trash2 className="w-4 h-4 mr-2" />
+            Clear
+          </Button>
+        </div>
+        <ScrollArea className="h-[400px]">
+          <AnimatePresence mode="popLayout">
+            <div className="space-y-2">
+              {commandHistory.length === 0 ? (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className={`text-center py-8 ${theme === 'dark' ? 'text-slate-500' : 'text-gray-500'}`}
+                >
+                  No commands executed yet
+                </motion.p>
+              ) : (
+                commandHistory.map((item, idx) => (
+                  <motion.div
+                    key={idx}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className={`flex items-center gap-3 p-3 rounded-lg ${theme === 'dark' ? 'bg-slate-800' : 'bg-gray-50'}`}
+                  >
+                    <Badge variant={item.status === 'success' ? 'default' : 'destructive'} className="shrink-0">
+                      {item.status}
+                    </Badge>
+                    <code className="text-green-400 flex-1 font-mono">{item.cmd}</code>
+                    <span className={`shrink-0 ${theme === 'dark' ? 'text-slate-500' : 'text-gray-500'}`}>{new Date(item.timestamp).toLocaleTimeString()}</span>
+                  </motion.div>
+                ))
+              )}
             </div>
-            <ScrollArea className="h-[400px]">
-              <AnimatePresence mode="popLayout">
-                <div className="space-y-2">
-                  {commandHistory.length === 0 ? (
-                    <motion.p
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      className={`text-center py-8 ${theme === 'dark' ? 'text-slate-500' : 'text-gray-500'}`}
-                    >
-                      No commands executed yet
-                    </motion.p>
-                  ) : (
-                    commandHistory.map((item, idx) => (
-                      <motion.div
-                        key={idx}
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        exit={{ opacity: 0, x: 20 }}
-                        transition={{ delay: idx * 0.05 }}
-                        className={`flex items-center gap-3 p-3 rounded-lg ${theme === 'dark' ? 'bg-slate-800' : 'bg-gray-50'}`}
-                      >
-                        <Badge variant={item.status === 'success' ? 'default' : 'destructive'} className="shrink-0">
-                          {item.status}
-                        </Badge>
-                        <code className="text-green-400 flex-1 font-mono">{item.cmd}</code>
-                        <span className={`shrink-0 ${theme === 'dark' ? 'text-slate-500' : 'text-gray-500'}`}>{new Date(item.timestamp).toLocaleTimeString()}</span>
-                      </motion.div>
-                    ))
-                  )}
-                </div>
-              </AnimatePresence>
-            </ScrollArea>
-          </Card>
+          </AnimatePresence>
+        </ScrollArea>
+      </Card>
     </div>
 
   );
