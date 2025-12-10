@@ -83,6 +83,7 @@ export function TextConfigPage({ payloadData, setPayloadData, theme }) {
           newPayloadData.status = 'idle';
           break;
         case 'GET_STATUS':
+          success = false;
           toast.info(`Status: ${payloadData.status}`);
           break;
         case 'RESET':
