@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Send, Terminal, Trash2, History, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Card } from '../ui/card';
@@ -20,6 +20,7 @@ import { toast } from 'sonner';
 export function TextConfigPage({ payloadData, setPayloadData, theme }) {
   const [command, setCommand] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const sendCommandButtonRef = useRef(null);
   // Type annotation for useState removed: <Array<{ cmd: string; timestamp: string; status: 'success' | 'error' }>>
   const [commandHistory, setCommandHistory] = useState([
     { cmd: 'SET_FREQ 915.0', timestamp: new Date(Date.now() - 300000).toISOString(), status: 'success' },
@@ -148,7 +149,8 @@ export function TextConfigPage({ payloadData, setPayloadData, theme }) {
                 />
               </div>
               <div className="flex gap-2">
-                <Button 
+                <Button
+                  ref={sendCommandButtonRef} 
                   onClick={handleSendCommand} 
                   className="bg-blue-600 hover:bg-blue-700"
                   disabled={isLoading}
@@ -246,19 +248,19 @@ export function TextConfigPage({ payloadData, setPayloadData, theme }) {
             <h2 className={`mb-4 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Quick Actions</h2>
             <div className="space-y-2">
               <Button
-                onClick={() => setCommand('START_TX')}
+                onClick={() => {setCommand('START_TX'); setTimeout(() => {sendCommandButtonRef.current?.click();}, 500);}}
                 className="w-full bg-green-600 hover:bg-green-700"
               >
                 Start Transmission
               </Button>
               <Button
-                onClick={() => setCommand('STOP_TX')}
+                onClick={() => {setCommand('STOP_TX'); setTimeout(() => {sendCommandButtonRef.current?.click();}, 500);}}
                 className="w-full bg-red-600 hover:bg-red-700"
               >
                 Stop Transmission
               </Button>
               <Button
-                onClick={() => setCommand('GET_STATUS')}
+                onClick={() => {setCommand('GET_STATUS'); setTimeout(() => {sendCommandButtonRef.current?.click();}, 500);}}
                 variant="outline"
                 className={`w-full ${theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}`}
               >
