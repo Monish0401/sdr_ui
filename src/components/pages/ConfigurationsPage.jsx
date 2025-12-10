@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { TextConfigPage } from './TextConfigPage';
 import { DataConfigPage } from './DataConfigPage';
+import { TestPage } from './TestPage';
 
 export function ConfigurationsPage({ payloadData, setPayloadData, theme }) {
   return (
@@ -42,6 +43,15 @@ export function ConfigurationsPage({ payloadData, setPayloadData, theme }) {
               Data Config
             </TabsTrigger>
 
+            <TabsTrigger
+              value="test"
+              className={theme === 'dark'
+                ? 'text-slate-300 data-[state=active]:bg-slate-800 data-[state=active]:text-white'
+                : 'text-gray-700 data-[state=active]:bg-white data-[state=active]:text-gray-900'}
+            >
+              Test Page
+            </TabsTrigger>
+
           </TabsList>
 
           <TabsContent value="text" className="mt-6">
@@ -50,6 +60,10 @@ export function ConfigurationsPage({ payloadData, setPayloadData, theme }) {
 
           <TabsContent value="data" className="mt-6">
             <DataConfigPage payloadData={payloadData} setPayloadData={setPayloadData} theme={theme} />
+          </TabsContent>
+
+          <TabsContent value="test" className="mt-6">
+            <TestPage payloadData={payloadData} setPayloadData={setPayloadData} theme={theme} />
           </TabsContent>
         </Tabs>
       </motion.div>
