@@ -161,12 +161,12 @@ export function DataConfigPage({ payloadData, setPayloadData, theme }) {
               <DialogTrigger asChild>
                 <Button className="bg-blue-600 hover:bg-blue-700">
                   <Plus className="w-4 h-4 mr-2" />
-                  Add Data
+                  Add Packets
                 </Button>
               </DialogTrigger>
               <DialogContent className={theme === 'dark' ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-gray-200 text-gray-900'}>
                 <DialogHeader>
-                  <DialogTitle>Add New Data</DialogTitle>
+                  <DialogTitle>Add New Packets</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4">
                   <div>

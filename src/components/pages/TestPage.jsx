@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Send, Terminal, Trash2, History, Loader2 } from 'lucide-react';
+import { Send, Terminal, Trash2, History, Loader2, Database, Upload, Download, Plus, Activity, Signal, Gauge, Radio, Edit } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
@@ -7,14 +7,12 @@ import { Textarea } from '../ui/textarea';
 import { Badge } from '../ui/badge';
 import { ScrollArea } from '../ui/scroll-area';
 import { toast } from 'sonner';
-//HomePage Lib
-import {
-  Activity,
-  Signal,
-  Gauge,
-  Radio,
-  Clock,
-} from "lucide-react";
+//DataConfigPage Lib
+import { Input } from '../ui/input';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import { Label } from '../ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -40,11 +38,9 @@ const itemVariants = {
 
 export function TestPage({ payloadData, setPayloadData, theme }) {
   const [command, setCommand] = useState('');
-  const [isLoading, setIsLoading] = useState({
-    Start: false,
-    Stop: false,
-    Status: false
-  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading1, setIsLoading1] = useState(false);
+  const [isLoading2, setIsLoading2] = useState(false);
   // Type annotation for useState removed: <Array<{ cmd: string; timestamp: string; status: 'success' | 'error' }>>
   const [commandHistory, setCommandHistory] = useState([
     { cmd: 'SET_FREQ 915.0', timestamp: new Date(Date.now() - 300000).toISOString(), status: 'success' },
@@ -56,10 +52,8 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
 
   const handleQuickActions = async (buttonType) => {
 
-    // setIsLoading(true);
 
-    // Simulate network delay
-    await new Promise(resolve => setTimeout(resolve, 800));
+
 
 
 
@@ -72,24 +66,21 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
     try {
       switch (buttonType) {
         case 'Start':
-          setIsLoading((prevState) => ({
-            ...prevState,
-            [buttonType]: true,
-          }));
-          
-          setTimeout(() => {
-            setIsLoading((prevState) => ({
-              ...prevState,
-              [buttonType]: false,
-            }));
-            newPayloadData.status = 'active';
-          }, 2000);
+          setIsLoading(true);
+          // Simulate network delay
+          await new Promise(resolve => setTimeout(resolve, 800));
+          newPayloadData.status = 'active';
           break;
         case 'Stop':
+          setIsLoading1(true);
+          // Simulate network delay
+          await new Promise(resolve => setTimeout(resolve, 800));
           newPayloadData.status = 'idle';
           break;
         case 'Status':
-          success = false;
+          setIsLoading2(true);
+          // Simulate network delay
+          await new Promise(resolve => setTimeout(resolve, 800));
           toast.info(`Status: ${payloadData.status}`);
           break;
         default:
@@ -102,6 +93,7 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
         newPayloadData.textCommands = [...payloadData.textCommands, command.trim()];
         setPayloadData(newPayloadData);
         setCommandHistory([...commandHistory, { cmd: buttonType, timestamp: new Date().toISOString(), status: 'success' }]);
+        await new Promise(resolve => setTimeout(resolve, 3000));
         toast.success('Command executed successfully', {
           description: `${buttonType} completed`,
         });
@@ -112,6 +104,8 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
       setCommandHistory([...commandHistory, { cmd: command.trim(), timestamp: new Date().toISOString(), status: 'error' }]);
     } finally {
       setIsLoading(false);
+      setIsLoading1(false);
+      setIsLoading2(false);
     }
   };
 
@@ -292,9 +286,9 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
               <Button
                 onClick={() => handleQuickActions('Start')}
                 className="w-full bg-green-600 hover:bg-green-700"
-                disabled={isLoading.Start}
+                disabled={isLoading}
               >
-                {isLoading.Start ? (
+                {isLoading ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                     Executing...
@@ -309,9 +303,9 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
               <Button
                 onClick={() => handleQuickActions('Stop')}
                 className="w-full bg-red-600 hover:bg-red-700"
-                disabled={isLoading}
+                disabled={isLoading1}
               >
-                {isLoading ? (
+                {isLoading1 ? (
                   <>
                     <Loader2 className="w-4 h-4 mr-2 animate-spin" />
                     Executing...
@@ -320,15 +314,25 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
                   <>
                     Stop Transmission
                   </>
-                )}
-
+                )}                 
               </Button>
               <Button
                 onClick={() => handleQuickActions('Status')}
                 variant="outline"
                 className={`w-full ${theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}`}
+                disabled={isLoading2}
               >
-                Get Status
+                {isLoading2 ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Executing...
+                  </>
+                ) : (
+                  <>
+                    Get Status
+                  </>
+                )} 
+                
               </Button>
             </div>
           </Card>
