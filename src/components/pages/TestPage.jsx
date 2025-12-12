@@ -119,10 +119,10 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
     }
   };
 
-  const clearHistory = () => {
-    setCommandHistory([]);
-    toast.info('Command history cleared');
-  };
+  // const clearHistory = () => {
+  //   setCommandHistory([]);
+  //   toast.info('Command history cleared');
+  // };
 
   //Home Page Functions
 
@@ -171,7 +171,7 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
 
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   // Removed: <string | null> type annotation
-  const [isDeleting, setIsDeleting] = useState(null);
+  const [setIsDeleting] = useState(null);
   const [newPacket, setNewPacket] = useState({
     id: '',
     type: '',

@@ -1,7 +1,7 @@
 import { motion } from 'motion/react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs';
 import { TextConfigPage } from './TextConfigPage';
-import { DataConfigPage } from './DataConfigPage';
+// import { DataConfigPage } from './DataConfigPage';
 import { TestPage } from './TestPage';
 
 export function ConfigurationsPage({ payloadData, setPayloadData, theme }) {
@@ -34,14 +34,14 @@ export function ConfigurationsPage({ payloadData, setPayloadData, theme }) {
               Text Config
             </TabsTrigger>
 
-            <TabsTrigger
+            {/* <TabsTrigger
               value="data"
               className={theme === 'dark'
                 ? 'text-slate-300 data-[state=active]:bg-slate-800 data-[state=active]:text-white'
                 : 'text-gray-700 data-[state=active]:bg-white data-[state=active]:text-gray-900'}
             >
               Data Config
-            </TabsTrigger>
+            </TabsTrigger> */}
 
             <TabsTrigger
               value="test"
@@ -49,7 +49,7 @@ export function ConfigurationsPage({ payloadData, setPayloadData, theme }) {
                 ? 'text-slate-300 data-[state=active]:bg-slate-800 data-[state=active]:text-white'
                 : 'text-gray-700 data-[state=active]:bg-white data-[state=active]:text-gray-900'}
             >
-              Test Page
+              Data Config
             </TabsTrigger>
 
           </TabsList>
@@ -58,9 +58,9 @@ export function ConfigurationsPage({ payloadData, setPayloadData, theme }) {
             <TextConfigPage payloadData={payloadData} setPayloadData={setPayloadData} theme={theme} />
           </TabsContent>
 
-          <TabsContent value="data" className="mt-6">
+          {/* <TabsContent value="data" className="mt-6">
             <DataConfigPage payloadData={payloadData} setPayloadData={setPayloadData} theme={theme} />
-          </TabsContent>
+          </TabsContent> */}
 
           <TabsContent value="test" className="mt-6">
             <TestPage payloadData={payloadData} setPayloadData={setPayloadData} theme={theme} />
