@@ -26,18 +26,20 @@ function App() {
     ],
     dataPackets: [
       {
-        id: 'PKT001',
+        id: 915,
         timestamp: new Date().toISOString(),
-        size: 256,
-        type: 'Telemetry',
-        data: '0x4A5F2E...'
+        size: 125,
+        type: 'LoRa',
+        data: 250000,
+        gain: '20'
       },
       {
-        id: 'PKT002',
+        id: '650',
         timestamp: new Date(Date.now() - 60000).toISOString(),
-        size: 128,
-        type: 'Command',
-        data: '0x1B3C4D...'
+        size: 240,
+        type: 'QAM',
+        data: 175000,
+        gain: '40'
       }
     ]
   });

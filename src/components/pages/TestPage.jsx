@@ -1,11 +1,11 @@
-import { useState, useRef } from 'react';
-import { Send, Terminal, Trash2, History, Loader2, Database, Upload, Download, Plus, Activity, Signal, Gauge, Radio, Edit } from 'lucide-react';
+import { useState } from 'react';
+import { Trash2, History, Loader2, Download, Plus, Activity, Signal, Gauge, Radio } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
-import { Textarea } from '../ui/textarea';
+// import { Textarea } from '../ui/textarea';
 import { Badge } from '../ui/badge';
-import { ScrollArea } from '../ui/scroll-area';
+// import { ScrollArea } from '../ui/scroll-area';
 import { toast } from 'sonner';
 //DataConfigPage Lib
 import { Input } from '../ui/input';
@@ -83,6 +83,16 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
           await new Promise(resolve => setTimeout(resolve, 800));
           toast.info(`Status: ${payloadData.status}`);
           break;
+        case 'Update':
+          newPayloadData = {
+            ...newPayloadData,
+            frequency: newPacket.id,
+            bandwidth: newPacket.size,
+            sampleRate: newPacket.data,
+            gain: newPacket.gain,
+            modulation: newPacket.type,
+          };
+          break;
         default:
           success = false;
           toast.error('Unknown Button Type');
@@ -117,17 +127,17 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
   //Home Page Functions
 
 
-  const statusColor = {
-    active: "bg-green-500",
-    idle: "bg-yellow-500",
-    error: "bg-red-500",
-  }[payloadData.status];
+  // const statusColor = {
+  //   active: "bg-green-500",
+  //   idle: "bg-yellow-500",
+  //   error: "bg-red-500",
+  // }[payloadData.status];
 
-  const statusText = {
-    active: "Active",
-    idle: "Idle",
-    error: "Error",
-  }[payloadData.status];
+  // const statusText = {
+  //   active: "Active",
+  //   idle: "Idle",
+  //   error: "Error",
+  // }[payloadData.status];
 
   const metrics = [
     {
@@ -194,8 +204,10 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
       data: '',
       gain: ''
     });
+
+    handleQuickActions('Update');
     setIsDialogOpen(false);
-    toast.success('Data packet added successfully');
+    toast.success('Data added successfully');
   };
 
   // Removed: (id: string) type annotation
@@ -224,28 +236,28 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
     toast.success('Data exported successfully');
   };
 
-  // Removed: React.ChangeEvent<HTMLInputElement> type annotation
-  const handleImportData = (event) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
+  // // Removed: React.ChangeEvent<HTMLInputElement> type annotation
+  // const handleImportData = (event) => {
+  //   const file = event.target.files?.[0];
+  //   if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const data = JSON.parse(e.target?.result); // Removed 'as string' type assertion
-        setPayloadData({
-          ...payloadData,
-          dataPackets: [...data, ...payloadData.dataPackets]
-        });
-        toast.success('Data imported successfully');
-      } catch (error) {
-        toast.error('Invalid JSON file');
-      }
-    };
-    reader.readAsText(file);
-  };
+  //   const reader = new FileReader();
+  //   reader.onload = (e) => {
+  //     try {
+  //       const data = JSON.parse(e.target?.result); // Removed 'as string' type assertion
+  //       setPayloadData({
+  //         ...payloadData,
+  //         dataPackets: [...data, ...payloadData.dataPackets]
+  //       });
+  //       toast.success('Data imported successfully');
+  //     } catch (error) {
+  //       toast.error('Invalid JSON file');
+  //     }
+  //   };
+  //   reader.readAsText(file);
+  // };
 
-  const totalDataSize = payloadData.dataPackets.reduce((sum, p) => sum + p.size, 0);
+  // const totalDataSize = payloadData.dataPackets.reduce((sum, p) => sum + p.size, 0);
 
 
 
@@ -380,7 +392,7 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
                           id="gain"
                           type="number"
                           value={newPacket.gain}
-                          onChange={(e) => setNewPacket({ ...newPacket, size: parseInt(e.target.value) })}
+                          onChange={(e) => setNewPacket({ ...newPacket, gain: parseInt(e.target.value) })}
                           placeholder="20"
                           className={`mt-2 ${theme === 'dark' ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                         />
@@ -570,7 +582,7 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
               <Download className="w-4 h-4 mr-2" />
               Export
             </Button>
-            <Button variant="outline" className={`relative ${theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}`}>
+            {/* <Button variant="outline" className={`relative ${theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}`}>
               <Upload className="w-4 h-4 mr-2" />
               Import
               <input
@@ -579,8 +591,8 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
                 onChange={handleImportData}
                 className="absolute inset-0 opacity-0 cursor-pointer"
               />
-            </Button>
-            <Button variant="outline" onClick={clearHistory} className={theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}>
+            </Button> */}
+            <Button variant="outline" onClick={handleDeletePacket} className={theme === 'dark' ? 'border-gray-300 text-gray-700' : 'border-gray-300 text-gray-700'}>
               <Trash2 className="w-4 h-4 mr-2" />
               Clear
             </Button>
