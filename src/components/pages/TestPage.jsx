@@ -51,17 +51,9 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
 
 
   const handleQuickActions = async (buttonType) => {
-
-
-
-
-
-
     let newPayloadData = { ...payloadData };
     let success = true;
-
-
-
+    
 
     try {
       switch (buttonType) {
@@ -180,6 +172,11 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
     gain: ''
   });
 
+  const handleAddData = () =>{
+    handleAddPacket();
+    handleQuickActions('Update');
+  }
+
   const handleAddPacket = () => {
     if (!newPacket.data || !newPacket.data) {
       toast.error('Please fill in all fields');
@@ -205,9 +202,10 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
       gain: ''
     });
 
-    handleQuickActions('Update');
+    
     setIsDialogOpen(false);
     toast.success('Data added successfully');
+    // handleQuickActions('Update');
   };
 
   // Removed: (id: string) type annotation
@@ -397,7 +395,7 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
                           className={`mt-2 ${theme === 'dark' ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                         />
                       </div>
-                      <Button onClick={handleAddPacket} className="w-full bg-blue-600 hover:bg-blue-700">
+                      <Button onClick={handleAddData} className="w-full bg-blue-600 hover:bg-blue-700">
                         Add Packet
                       </Button>
                     </div>
@@ -629,15 +627,15 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
                       transition={{ delay: idx * 0.05 }}
                       className={theme === 'dark' ? 'border-slate-800 hover:bg-slate-800' : 'border-gray-200 hover:bg-gray-50'}
                     >
-                      <TableCell className="text-blue-400 font-mono">{packet.id}</TableCell>
+                      <TableCell className="text-blue-400 font-mono">{packet.id} MHz</TableCell>
                       <TableCell>
                         <Badge variant="outline" className={theme === 'dark' ? 'border-slate-700 text-slate-300' : 'border-gray-300 text-gray-700'}>
                           {packet.type}
                         </Badge>
                       </TableCell>
-                      <TableCell className={theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}>{packet.size} bytes</TableCell>
-                      <TableCell className="text-cyan-400 font-mono">{packet.data}</TableCell>
-                      <TableCell className="text-cyan-400 font-mono">{packet.gain}</TableCell>
+                      <TableCell className={theme === 'dark' ? 'text-slate-300' : 'text-gray-700'}>{packet.size} kHz</TableCell>
+                      <TableCell className="text-cyan-400 font-mono">{packet.data} Sps</TableCell>
+                      <TableCell className="text-cyan-400 font-mono">{packet.gain} dB</TableCell>
                       <TableCell className={theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}>
                         {new Date(packet.timestamp).toLocaleString()}
                       </TableCell>

@@ -240,7 +240,7 @@ export function HomePage({ payloadData, theme }) { // Converted function signatu
             <div className={`rounded-lg p-4 ${theme === 'dark' ? 'bg-slate-800' : 'bg-gray-50'}`}>
               <div className="flex items-center justify-between mb-2">
                 <span className="text-purple-400">
-                  Last Data Packet
+                  Last Data 
                 </span>
                 <span className={theme === 'dark' ? 'text-slate-500' : 'text-gray-500'}>
                   {new Date(

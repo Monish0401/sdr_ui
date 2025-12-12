@@ -13,7 +13,7 @@ export function ConfigurationsPage({ payloadData, setPayloadData, theme }) {
         transition={{ duration: 0.4 }}
       >
         <h1 className={`mb-2 ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>Configurations</h1>
-        <p className={theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}>Configure SDR payload using text-based commands or data packets</p>
+        <p className={theme === 'dark' ? 'text-slate-400' : 'text-gray-600'}>Configure SDR payload using text-based commands or data-based. </p>
       </motion.div>
 
       <motion.div
@@ -31,7 +31,7 @@ export function ConfigurationsPage({ payloadData, setPayloadData, theme }) {
                 ? 'text-slate-300 data-[state=active]:bg-slate-800 data-[state=active]:text-white'
                 : 'text-gray-700 data-[state=active]:bg-white data-[state=active]:text-gray-900'}
             >
-              Text Config
+              Text Configuration
             </TabsTrigger>
 
             {/* <TabsTrigger
@@ -49,7 +49,7 @@ export function ConfigurationsPage({ payloadData, setPayloadData, theme }) {
                 ? 'text-slate-300 data-[state=active]:bg-slate-800 data-[state=active]:text-white'
                 : 'text-gray-700 data-[state=active]:bg-white data-[state=active]:text-gray-900'}
             >
-              Data Config
+              Data Configuration
             </TabsTrigger>
 
           </TabsList>
