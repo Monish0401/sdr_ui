@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Trash2, History, Loader2, Download, Plus, Activity, Signal, Gauge, Radio } from 'lucide-react';
+import { Trash2, History, Loader2, Download, Activity, Signal, Gauge, Radio, Settings2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Card } from '../ui/card';
 import { Button } from '../ui/button';
@@ -177,7 +177,7 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
     handleQuickActions('Update');
   }
 
-  const handleAddPacket = () => {
+  const handleAddPacket = async () => {
     if (!newPacket.data || !newPacket.data) {
       toast.error('Please fill in all fields');
       return;
@@ -209,16 +209,17 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
   };
 
   // Removed: (id: string) type annotation
-  const handleDeletePacket = async (id) => {
-    setIsDeleting(id);
+  const handleDeletePacket = async () => {
+    // setIsDeleting(id);
     await new Promise(resolve => setTimeout(resolve, 500));
 
-    setPayloadData({
+    setPayloadData(payloadData => ({
       ...payloadData,
-      dataPackets: payloadData.dataPackets.filter(p => p.id !== id)
-    });
-    toast.success('Data packet deleted', {
-      description: `Packet ${id} has been removed`,
+      dataPackets: [],
+      lastUpdate: new Date().toISOString()
+    }));
+    toast.success('Data deleted', {
+      description: `Data has been removed`,
     });
     setIsDeleting(null);
   };
@@ -324,13 +325,13 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
                 <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                   <DialogTrigger asChild>
                     <Button className="bg-blue-600 hover:bg-blue-700">
-                      <Plus className="w-4 h-4 mr-2" />
-                      Add Data
+                      <Settings2 className="w-4 h-4 mr-2" />
+                      Configure Data
                     </Button>
                   </DialogTrigger>
                   <DialogContent className={theme === 'dark' ? 'bg-slate-900 border-slate-800 text-white' : 'bg-white border-gray-200 text-gray-900'}>
                     <DialogHeader>
-                      <DialogTitle>Add New Data</DialogTitle>
+                      <DialogTitle>Configure Data</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-4">
                       <div>
@@ -395,8 +396,8 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
                           className={`mt-2 ${theme === 'dark' ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                         />
                       </div>
-                      <Button onClick={handleAddData} className="w-full bg-blue-600 hover:bg-blue-700">
-                        Add Packet
+                      <Button onClick={async ()=>{await handleAddData(); await handleQuickActions('Update');}} className="w-full bg-blue-600 hover:bg-blue-700">
+                        Configure
                       </Button>
                     </div>
                   </DialogContent>
