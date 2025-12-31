@@ -53,7 +53,7 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
   const handleQuickActions = async (buttonType) => {
     let newPayloadData = { ...payloadData };
     let success = true;
-    
+
 
     try {
       switch (buttonType) {
@@ -76,6 +76,14 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
           toast.info(`Status: ${payloadData.status}`);
           break;
         case 'Update':
+          if (!newPacket.data || !newPacket.data) {
+            toast.error('Please fill in all fields');
+            return;
+          }
+          const packet = {
+            ...newPacket,
+            timestamp: new Date().toISOString()
+          };
           newPayloadData = {
             ...newPayloadData,
             frequency: newPacket.id,
@@ -83,6 +91,7 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
             sampleRate: newPacket.data,
             gain: newPacket.gain,
             modulation: newPacket.type,
+            dataPackets: [packet, ...payloadData.dataPackets],
           };
           break;
         default:
@@ -172,16 +181,16 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
     gain: ''
   });
 
-  const handleAddData = () =>{
+  const handleAddData = () => {
     handleAddPacket();
-    handleQuickActions('Update');
+    // handleQuickActions('Update');
   }
 
   const handleAddPacket = async () => {
-    if (!newPacket.data || !newPacket.data) {
-      toast.error('Please fill in all fields');
-      return;
-    }
+    // if (!newPacket.data || !newPacket.data) {
+    //   toast.error('Please fill in all fields');
+    //   return;
+    // }
 
     const packet = {
       ...newPacket,
@@ -202,7 +211,7 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
       gain: ''
     });
 
-    
+
     setIsDialogOpen(false);
     toast.success('Data added successfully');
     // handleQuickActions('Update');
@@ -396,7 +405,7 @@ export function TestPage({ payloadData, setPayloadData, theme }) {
                           className={`mt-2 ${theme === 'dark' ? 'bg-slate-800 border-slate-700 text-white' : 'bg-white border-gray-300 text-gray-900'}`}
                         />
                       </div>
-                      <Button onClick={async ()=>{await handleAddData(); await handleQuickActions('Update');}} className="w-full bg-blue-600 hover:bg-blue-700">
+                      <Button onClick={async () => { await handleAddData(); await handleQuickActions('Update'); }} className="w-full bg-blue-600 hover:bg-blue-700">
                         Configure
                       </Button>
                     </div>
